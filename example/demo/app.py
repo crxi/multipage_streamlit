@@ -2,17 +2,19 @@ import streamlit as st
 st.set_page_config(layout="wide")
 
 st.title("MultiPage Streamlit Demo")
-st.text("""
-  Change some settings. Then switch between Histogram and Trigonometry.
-  Observe that the settings are persisted even as we switch pages.
-  """)
+st.write("""
+  Switch between the pages and change their settings.  
+  Observe that the settings persisted even as we switched pages.  
+  Get the code at <https://github.com/crxi/multipage_streamlit>.
+""")
 
 # This is how we create a multipage app
 import multipage_streamlit as mt
-from pages import histo, trigo
+from pages import histo, trigo, gallery
 app = mt.MultiPage()
 app.add("Histogram", histo.run)
 app.add("Trigonometry", trigo.run)
+app.add("Gallery", gallery.run)
 
 # We show 2 different styles of multipage apps; typically we just use one
 style = st.sidebar.radio("MultiPage style:", ["selectbox", "expander"],
