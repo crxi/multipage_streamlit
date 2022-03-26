@@ -67,6 +67,11 @@ def run():
     st.header("Page A")
     
     x = st.slider("Value X", min_value=0, max_value=100, **ms("x", 50))
+    # here's the "magic": ms(key, default, ...) creates a dictionary with the
+    # namespace-prefixed-key, the default value, and an "on_change" callback
+    # that does the necessary book-keeping.
+    # if you don't like the name "ms", you can call it something else by
+    # changing the line "ms = mt.State(__name__)".
 ```
 
 ## Feedback
