@@ -17,15 +17,22 @@ help, but frustratingly it does not. The reason is addressed here: https://githu
 By design, the values of widgets stored in session_state are removed if they no longer appear on the current page.
 
 That same ticket implemented a solution to make the values persist. It does it by intercepting "on_change"
-so that it can save the value into a persistent dictionary in session_state. I thought it was pretty clever.
+so that it can save the value into a persistent dictionary in session_state. I thought it was pretty clever,
+although it does add some complexity if we want to use "on_change".
+
+Then I came across this: https://github.com/streamlit/streamlit/issues/4338. The purposed solution (in the comment)
+had a different approach which does not involve using "on_change". While it did not work out-of-the-box for me as my
+app spanned different modules, it inspired me to come up with a different solution.
 
 ## What's new here?
-I combined the two solutions and got something that worked for my purpose. And so I would like to
+I combined the solutions and got something that worked for my purpose. And so I would like to
 share it with the Streamlit Community.
 
 I added some other features:
-- other than a "selectbox" style, I have an option for "expander" style of pages
-- concept of namespace-prefix when saving states to avoid accidental reuse of key names
+- 3 different styles of multipage app: selectbox, expander and radio.
+- allow setting of default value when declaring key name
+- concept of namespace-prefix when saving states to avoid accidental reuse of key names (especially if the
+  pages span multiple modules)
 
 
 ## Installation
@@ -51,28 +58,30 @@ app = mt.MultiPage()
 app.add("Page A", page_a.run)
 app.add("Page B", page_a.run)
 app.run_selectbox()
-# or app.run_expander() if you prefer that 
+# alternatives: app.run_expander() or app.run_radio() if you prefer those 
 ```
 
 In each page.py:
 ```
 import streamlit as st
-import multipage_streamlit as mt
+from multipage_streamlit import State
 
 def run():
-    ms = mt.State(__name__)
+    state = State(__name__)
     # the above line is required if you want to save states across page switches.
     # you can provide your own namespace prefix to make keys unique across pages.
     # here we use __name__ for convenience.
     st.header("Page A")
     
-    x = st.slider("Value X", min_value=0, max_value=100, **ms("x", 50))
-    # here's the "magic": ms(key, default, ...) creates a dictionary with the
-    # namespace-prefixed-key, the default value, and an "on_change" callback
-    # that does the necessary book-keeping.
-    # if you don't like the name "ms", you can call it something else by
-    # changing the line "ms = mt.State(__name__)".
+    x = st.slider("Value X", min_value=0, max_value=100, key=state("x", 50))
+    # here's the "magic": state(name, default, ...) returns the namespace-prefixed
+    # key name. if a previously saved state exist, the widget is set to it. if not,
+    # the widget is set to default if it is specified.
+    
+    state.save()  # MUST CALL THE ABOVE TO SAVE THE STATE!
 ```
+
+See the demo for more examples.
 
 ## Feedback
 Your feedback is most welcomed. You can send via "Issues" or email to crxi.code@gmail.com.
