@@ -16,13 +16,13 @@ app.add("Histogram", histo.run)
 app.add("Trigonometry", trigo.run)
 app.add("Gallery", gallery.run)
 
-# We show 2 different styles of multipage apps; typically we just use one
-style = st.sidebar.radio("MultiPage style:", ["selectbox", "expander"],
-                          help="Choose the style of the multipage app")
-if style == "selectbox":
-   app.run_selectbox()
-else:
-   app.run_expander()
+# We show 3 different styles of multipage apps; typically we just use one and do
+#   app.run_selectbox()
+# For the sake of the demo, we allow switching between all 3 styles.
+style = st.sidebar.radio("MultiPage style:", app.styles,
+                              help="Choose the style of the multipage app")
+app.run(style)
+
 
 # Show session_state to the curious
 if st.sidebar.checkbox("Show session_state", help="See namespaces and saved states"):

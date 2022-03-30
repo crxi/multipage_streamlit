@@ -1,2 +1,2 @@
 from .multipage import MultiPage
-from .state import State 
+from .state import State

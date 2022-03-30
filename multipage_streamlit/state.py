@@ -1,32 +1,32 @@
-import streamlit as st
+from streamlit import session_state as ses
 
-# Reference: https://github.com/streamlit/streamlit/issues/3925
+# References:
+# - https://github.com/streamlit/streamlit/issues/4338#issuecomment-1059519626
+# - https://github.com/streamlit/streamlit/issues/3925 (previous idea)
 
-class State():
-    SAVED = "_saved_"
-    def __init__(self, namespace="TOP"):
-        self.ns = f"{namespace}:"
-        ses = st.session_state
-        if State.SAVED not in ses:
-            ses[State.SAVED] = {}
-        self.saved = ses[State.SAVED]
+class State:
+    _KEY_ = "_state_"
+    def __init__(self, namespace="_TOP_"):
+        self._ns = f"{namespace}:"
+        if State._KEY_ not in ses:
+            ses[State._KEY_] = {}
+        self._saved = ses[State._KEY_]
+        self._keys = []
+
+    def __call__(self, key, default=None):
+        key = self._ns + key
+        if key not in ses:
+            if key in self._saved: # restore saved value
+                ses[key] = self._saved[key]
+            elif default is not None: # otherwise set to default if given
+                ses[key] = self._saved[key] = default
+        self._keys.append(key)
+        return key
+
+    def save(self):
+        for key in self._keys:
+            self._saved[key] = ses[key]
     
-    def __call__(self, key, default=None, on_change=None, args=None, kwargs=None):
-        key = self.ns + key
-        ses = st.session_state
-        if key not in ses: # restore value before creating widget
-            if key in self.saved:
-                ses[key] = self.saved[key]
-            elif default is not None:
-                ses[key] = self.saved[key] = default
-        
-        def _on_change():
-            self.saved[key] = ses[key]
-            if on_change is not None:
-                on_change(*args, **kwargs)
-
-        return {"on_change":_on_change, "key":key} #, "args":args, "kwargs":kwargs}
-
     def get(self, key, default=None):
         key = self.ns + key
-        return self.saved.get(key, default)
+        return self._saved.get(key, default)
