@@ -84,7 +84,7 @@ def run():
     # key name. if a previously saved state exist, the widget is set to it. if not,
     # the widget is set to default if it is specified.
     
-    state.save()  # MUST CALL THE ABOVE TO SAVE THE STATE!
+    state.save()  # MUST CALL THIS TO SAVE THE STATE!
 ```
 
 See the demo for more examples.
