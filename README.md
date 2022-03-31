@@ -1,4 +1,5 @@
 # MultiPage Streamlit
+MultiPage Streamlit app with persistent widget states
 
 ## Demo
 Run the demo app: https://share.streamlit.io/crxi/multipage_streamlit/main/example/demo/app.py
@@ -85,3 +86,16 @@ See the demo for more examples.
 
 ## Feedback
 Your feedback is most welcomed. You can send via "Issues" or email to crxi.code@gmail.com.
+
+## Contributing
+Interested in contributing? Check out the contributing guidelines.
+Please note that this project is released with a Code of Conduct.
+By contributing to this project, you agree to abide by its terms.
+
+## License
+`multipage_streamlit` was created by CRXi <crxi.code@gmail.com>.
+It is licensed under the terms of the Apache License 2.0 license.
+
+## Credits
+`multipage_streamlit` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/)
+and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).

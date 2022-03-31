@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "multipage_streamlit"
+version = "0.1.0"
+description = "MultiPage Streamlit app with persistent widget states"
+authors = ["CRXi <crxi.code@gmail.com>"]
+license = "Apache License 2.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+streamlit = ">=1.7"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
