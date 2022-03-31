@@ -37,7 +37,12 @@ I added some other features:
 
 
 ## Installation
+From PyPI:
+```bash
+python -m pip install multipage_streamlit
 ```
+From GitHub:
+```bash
 python -m pip install git+https://github.com/crxi/multipage_streamlit
 ```
 
@@ -51,7 +56,7 @@ Organize your pages as follows:
 ```
 
 Your top level app.py:
-```
+```python
 import multipage_streamlit as mt
 from pages import page_a, page_b
 
@@ -63,7 +68,7 @@ app.run_selectbox()
 ```
 
 In each page.py:
-```
+```python
 import streamlit as st
 from multipage_streamlit import State
 
