@@ -28,5 +28,5 @@ class State:
             self._saved[key] = ses[key]
     
     def get(self, key, default=None):
-        key = self.ns + key
+        key = self._ns + key
         return self._saved.get(key, default)
