@@ -30,3 +30,7 @@ class State:
     def get(self, key, default=None):
         key = self._ns + key
         return self._saved.get(key, default)
+
+    def set(self, key, value):
+        key = self._ns + key
+        self._saved[key] = value

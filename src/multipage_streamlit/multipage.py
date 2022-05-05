@@ -15,8 +15,8 @@ class MultiPage:
     def add(self, title, run) -> None: 
         self.pages[title] = run
 
-    def run_selectbox(self, label="Navigation"):
-        title = st.sidebar.selectbox(label, list(self.pages.keys()))
+    def run_selectbox(self, label="Navigation", index=0):
+        title = st.sidebar.selectbox(label, list(self.pages.keys()), index=index)
         self.pages[title]()
 
     def run_expander(self):
